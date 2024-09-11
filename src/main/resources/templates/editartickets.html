@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="/img/Logo.png" alt="Logo" class="logo">
+        <a th:href="@{/home}">
+            <div class="icon">🏠</div>
+            <div class="label">Home</div>
+        </a>
+        <a th:href="@{/tickets}">
+            <div class="icon">🎫</div>
+            <div class="label">Ver Tickets</div>
+        </a>
+        <a th:href="@{/ticketsconcluidos}">
+            <div class="icon">✅</div>
+            <div class="label">Ver Tickets Concluidos</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📶</div>
+            <div class="label">Ver Status</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">🖥️</div>
+            <div class="label">Ver Funcionários</div>
+        </a>
+        <a th:href="@{/criarticket}">
+            <div class="icon">💻</div>
+            <div class="label">Criar Ticket</div>
+        </a>
+        <a th:href="@{/criastatus}">
+            <div class="icon">📊</div>
+            <div class="label">Cadastrar Status</div>
+        </a>
+        <a th:href="@{/criasetor}">
+            <div class="icon">🗄️</div>
+            <div class="label">Cadastrar Setor</div>
+        </a>
+        <a th:href="@{/cadastrafuncionario}">
+            <div class="icon">👨🏻‍💼</div>
+            <div class="label">Cadastrar Funcionário</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📞</div>
+            <div class="label">Contato</div>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Editar Ticket 📋</h1>
+            <form action="/criarticket" method="post" th:object="${tickets}">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" id="title" name="titulo" required th:field="*{titulo}">
+                </div>
+                <div class="form-group">
+                    <label for="description">Descrição</label>
+                    <textarea id="description" name="observacao" rows="4" required th:field="*{observacao}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option th:each="status : ${status}" th:value="${status.id}" th:text="${status.nome}" th:field="*{status}">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Data</label>
+                    <input type="date" id="data" name="data" required th:field="*{data}">
+                <!--    <input type="date" id="date" name="data" required> -->
+                </div>
+                <div class="form-group">
+                    <label for="sector">Setor</label>
+                    <select id="sector" name="setor" required>
+                        <option th:each="setores : ${setores}" th:value="${setores.id}" th:text="${setores.nome}" th:field="*{setor}">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="employee">Funcionário</label>
+                    <select id="employee" name="funcionario" required>
+                        <option th:each="funcionario : ${funcionario}" th:value="${funcionario.id}" th:text="${funcionario.nome}" th:field="*{funcionario}"> 
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Prioridade</label>
+                    <select id="priority" name="prioridade" class="priority-select" required >
+                        <option >Selecione a prioridade</option>
+                        <option th:field="*{prioridade}"  value="Baixa" >Baixa 🟩</option>
+                        <option th:field="*{prioridade}"  value="Media" >Média 🟨</option>
+                        <option th:field="*{prioridade}"  value="Alta" >Alta 🟥</option>
+                        <option th:field="*{prioridade}"  value="Urgente" >Urgente ⬛</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Salvar Edição</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina principal</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="/img/Logo.png" alt="Logo" class="logo">
+        <a th:href="@{/home}">
+            <div class="icon">🏠</div>
+            <div class="label">Home</div>
+        </a>
+        <a th:href="@{/tickets}">
+            <div class="icon">🎫</div>
+            <div class="label">Ver Tickets</div>
+        </a>
+        <a th:href="@{/ticketsconcluidos}">
+            <div class="icon">✅</div>
+            <div class="label">Ver Tickets Concluidos</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📶</div>
+            <div class="label">Ver Status</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">🖥️</div>
+            <div class="label">Ver Funcionários</div>
+        </a>
+        <a th:href="@{/criarticket}">
+            <div class="icon">💻</div>
+            <div class="label">Criar Ticket</div>
+        </a>
+        <a th:href="@{/criastatus}">
+            <div class="icon">📊</div>
+            <div class="label">Cadastrar Status</div>
+        </a>
+        <a th:href="@{/criasetor}">
+            <div class="icon">🗄️</div>
+            <div class="label">Cadastrar Setor</div>
+        </a>
+        <a th:href="@{/cadastrafuncionario}">
+            <div class="icon">👨🏻‍💼</div>
+            <div class="label">Cadastrar Funcionário</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📞</div>
+            <div class="label">Contato</div>
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="table-container">
+            <h1>Pesquisa em Tabela 📋</h1>
+            <button class="accordion" style="width: 80px;">Filtros  🔎 </button>
+            <div class="panel">
+                <form th:action="@{/tickets}" method="post" >
+                    <input type="text" name="titulo" placeholder="Buscar por titulo...."
+                        style="width: 190px; height: 25px;border-radius: 5px; " >
+                    <input type="submit" value="Pesquisar">
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket</th>
+                        <th>Título</th>
+                        <th>Setor</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tickets : ${tickets}">
+                        <td th:text="${tickets.id}"></td>
+                        <td th:text="${tickets.titulo}"></td>
+                        <td th:text="${tickets.setor.nome}"></td>
+                        <td th:text="${tickets.status.nome}"></td>
+                        <td th:text="${#dates.format(tickets.Data, 'dd-MMM-yyyy')}"></td>
+                        <td>
+                            <a th:href="@{/editartickets/{id}(id=${tickets.id})}" class="btn edit">Editar</a>
+                            <a th:href="@{/excluir/{id}(id=${tickets.id})}"
+                                th:data-confirm-delete="|Você gostaria de apagar o seguinte ticket : ${tickets.titulo}?|"
+                                onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"
+                                class="btn delete">Excluir</a>
+                            <a th:href="@{/home-verobservacao/{id}(id=${tickets.id})}" class="btn ver">Ver
+                                Observação</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para controlar o comportamento do acordeão
+        document.querySelectorAll('.accordion').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const panel = button.nextElementSibling;
+                if (button.classList.contains('active')) {
+                    panel.style.display = 'block';
+                } else {
+                    panel.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

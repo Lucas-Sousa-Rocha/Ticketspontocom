@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina principal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="/img/Logo.png" alt="Logo" class="logo">
+        <a th:href="@{/home}">
+            <div class="icon">🏠</div>
+            <div class="label">Home</div>
+        </a>
+        <a th:href="@{/tickets}">
+            <div class="icon">🎫</div>
+            <div class="label">Ver Tickets</div>
+        </a>
+        <a th:href="@{/ticketsconcluidos}">
+            <div class="icon">✅</div>
+            <div class="label">Ver Tickets Concluidos</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📶</div>
+            <div class="label">Ver Status</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">🖥️</div>
+            <div class="label">Ver Funcionários</div>
+        </a>
+        <a th:href="@{/criarticket}">
+            <div class="icon">💻</div>
+            <div class="label">Criar Ticket</div>
+        </a>
+        <a th:href="@{/criastatus}">
+            <div class="icon">📊</div>
+            <div class="label">Cadastrar Status</div>
+        </a>
+        <a th:href="@{/criasetor}">
+            <div class="icon">🗄️</div>
+            <div class="label">Cadastrar Setor</div>
+        </a>
+        <a th:href="@{/cadastrafuncionario}">
+            <div class="icon">👨🏻‍💼</div>
+            <div class="label">Cadastrar Funcionário</div>
+        </a>
+        <a th:href="@{/home}">
+            <div class="icon">📞</div>
+            <div class="label">Contato</div>
+        </a>
+    </div>
+</body>
+
+</html>
