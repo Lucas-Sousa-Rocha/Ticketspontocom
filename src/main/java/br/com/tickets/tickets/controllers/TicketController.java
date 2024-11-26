@@ -133,8 +133,6 @@ public class TicketController {
 		return "redirect:/home";
 	}
 
-
-
     @GetMapping("/excluir/{id}")
     public String deleteTicket(@PathVariable long id){
     	ticketRepository.deleteById(id);
