@@ -16,9 +16,9 @@ public interface TicketsRepository extends JpaRepository<Tickets, Long> {
     @Query("SELECT p FROM Tickets p WHERE p.titulo LIKE %:titulo%")
     Iterable<Tickets> findBytitulo(@Param("titulo") String titulo);
 
-    @Query("SELECT t FROM Tickets t WHERE t.status.id != 1")
+    @Query("SELECT t FROM Tickets t WHERE t.status.id != 3")
     List<Tickets> findByActive();
 
-    @Query("SELECT t FROM Tickets t WHERE t.status.id = 1")
+    @Query("SELECT t FROM Tickets t WHERE t.status.id = 3")
     List<Tickets> findByFinish();
 }

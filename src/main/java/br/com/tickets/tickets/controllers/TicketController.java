@@ -2,7 +2,6 @@ package br.com.tickets.tickets.controllers;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import br.com.tickets.tickets.model.entities.Funcionarios;
 import br.com.tickets.tickets.model.entities.Setores;
 import br.com.tickets.tickets.model.entities.Status;
@@ -133,9 +131,9 @@ public class TicketController {
 		return "redirect:/home";
 	}
 
-    @GetMapping("/excluir/{id}")
+    @PostMapping("/excluir/{id}")
     public String deleteTicket(@PathVariable long id){
-    	ticketRepository.deleteById(id);
+    	ticketRepository.deleteById(id);   
         return"redirect:/tickets";
     }
 
@@ -144,11 +142,11 @@ public class TicketController {
 		ModelAndView mv = new ModelAndView("editartickets");
 		Optional<Tickets> tickets = ticketRepository.findById(id);
 		mv.addObject("tickets", tickets);
-		Iterable<Setores> setores = setoresRepository.findByStatus("Ativo");
+		List<Setores> setores = setoresRepository.findByStatus("Ativo");
         mv.addObject("setores", setores);
-        Iterable<Funcionarios> funcionarios = funcionarioRepository.findByStatus("Ativo");
+        List<Funcionarios> funcionarios = funcionarioRepository.findByStatus("Ativo");
         mv.addObject("funcionario", funcionarios);
-        Iterable<Status> status = statusRepository.findBySituacao("Ativo"); 
+        List<Status> status = statusRepository.findBySituacao("Ativo"); 
         mv.addObject("status", status);
 		return mv;
 	}

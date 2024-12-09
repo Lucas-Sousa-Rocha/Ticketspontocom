@@ -63,46 +63,89 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Descrição</label>
-                    <textarea id="description" name="observacao" rows="4" required></textarea>
+                    <textarea id="description" name="observacao" rows="4" required maxlength="5000"
+                        placeholder="Digite a descrição..."></textarea>
+                    <p id="charCount">0/5000 caracteres</p>
+                    <p id="wordCount">0/500 palavras</p>
+
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select id="status" name="status" required>
+                        <option value="" disabled selected>Selecione o Status</option>
                         <option th:each="status : ${status}" th:value="${status.id}" th:text="${status.nome}">
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="date">Data</label>
                     <input type="date" id="data" name="data" required>
-                <!--    <input type="date" id="date" name="data" required> -->
+                    <!--    <input type="date" id="date" name="data" required> -->
                 </div>
                 <div class="form-group">
                     <label for="sector">Setor</label>
                     <select id="sector" name="setor" required>
+                        <option value="" disabled selected>Selecione o setor</option>
                         <option th:each="setores : ${setores}" th:value="${setores.id}" th:text="${setores.nome}">
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="employee">Funcionário</label>
                     <select id="employee" name="funcionario" required>
-                        <option th:each="funcionario : ${funcionario}" th:value="${funcionario.id}" th:text="${funcionario.nome}">
+                        <option value="" disabled selected>Selecione o funcionário</option>
+                        <option th:each="funcionario : ${funcionario}" th:value="${funcionario.id}"
+                            th:text="${funcionario.nome}">
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="priority">Prioridade</label>
                     <select id="priority" name="prioridade" class="priority-select" required>
-                        <option >Selecione a prioridade</option>
-                        <option value="Baixa" >Baixa 🟩</option>
-                        <option value="Media" >Média 🟨</option>
-                        <option value="Alta" >Alta 🟥</option>
-                        <option value="Urgente" >Urgente ⬛</option>
+                        <option value="" disabled selected>Selecione a prioridade</option>
+                        <option value="Baixa">Baixa 🟩</option>
+                        <option value="Media">Média 🟨</option>
+                        <option value="Alta">Alta 🟥</option>
+                        <option value="Urgente">Urgente ⬛</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <button type="submit">Criar Ticket</button>
                 </div>
+                <div th:if="${errorMessage}" class="alert alert-danger">
+                    <p th:text="${errorMessage}"></p>
+                </div>
             </form>
         </div>
     </div>
 </body>
+<script>
+    const descriptionField = document.getElementById("description");
+    const charCount = document.getElementById("charCount");
+    const wordCount = document.getElementById("wordCount");
+    const maxChars = 5000;  // Limite de caracteres
+    const maxWords = 500;   // Limite de palavras
+
+    descriptionField.addEventListener("input", function() {
+        const text = descriptionField.value;
+        
+        // Contagem de caracteres
+        const charCountValue = text.length;
+        charCount.textContent = `${charCountValue}/${maxChars} caracteres`;
+
+        // Contagem de palavras
+        const wordArray = text.trim().split(/\s+/);  // Divide o texto em palavras
+        const wordCountValue = wordArray.filter(word => word.length > 0).length;  // Conta apenas as palavras não vazias
+        wordCount.textContent = `${wordCountValue}/${maxWords} palavras`;
+
+        // Limita o texto a 500 palavras e 5000 caracteres
+        if (wordCountValue > maxWords) {
+            const limitedText = wordArray.slice(0, maxWords).join(" ");
+            descriptionField.value = limitedText;
+            wordCount.textContent = `${maxWords}/${maxWords} palavras`;
+        }
+
+        if (charCountValue > maxChars) {
+            descriptionField.value = text.slice(0, maxChars);  // Limita o texto a 5000 caracteres
+            charCount.textContent = `${maxChars}/${maxChars} caracteres`;
+        }
+    });
+</script>
 </html>

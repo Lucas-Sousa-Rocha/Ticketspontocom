@@ -14,7 +14,7 @@ public class Tickets {
     @Column(nullable = false, length = 50)
     private String titulo;
 
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 5000)
     private String observacao;
 
     private Date data;
